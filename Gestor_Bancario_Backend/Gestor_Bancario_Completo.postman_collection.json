@@ -1,0 +1,803 @@
+{
+  "info": {
+    "name": "Gestor Bancario - API Completa",
+    "description": "Colección completa e integrada que incluye los endpoints del AuthService y del Gestor Bancario principal.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "adminToken", "value": "" },
+    { "key": "userToken", "value": "" },
+    { "key": "userId", "value": "" },
+    { "key": "signupRequestId", "value": "" },
+    { "key": "updateRequestId", "value": "" },
+    { "key": "cuentaOrigenId", "value": "" },
+    { "key": "cuentaDestinoId", "value": "" },
+    { "key": "transactionId", "value": "" },
+    { "key": "favoriteId", "value": "" },
+    { "key": "serviceId", "value": "" },
+    { "key": "promotionId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth Service (Puerto 3005)",
+      "item": [
+        {
+          "name": "Autenticación y Registro",
+          "item": [
+            {
+              "name": "Login",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\" : \"iossg8@gmail.com\",\n    \"password\": \"Hola12345678\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "http://localhost:3005/api/v1/auth/login",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3005",
+                  "path": ["api", "v1", "auth", "login"]
+                }
+              }
+            },
+            {
+              "name": "Solicitar Registro",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    { "key": "name", "value": "ios", "type": "text" },
+                    { "key": "email", "value": "iossg8@gmail.com", "type": "text" },
+                    { "key": "password", "value": "Hola12345678", "type": "text" },
+                    { "key": "phone", "value": "53170347", "type": "text" },
+                    { "key": "profilePicture", "type": "file", "src": [] }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:3005/api/v1/auth/signup-request",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3005",
+                  "path": ["api", "v1", "auth", "signup-request"]
+                }
+              }
+            },
+            {
+              "name": "Verificar Email",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"token\": \"AQUI_EL_TOKEN_DEL_CORREO\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "http://localhost:3005/api/v1/auth/verify-email",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3005",
+                  "path": ["api", "v1", "auth", "verify-email"]
+                }
+              }
+            },
+            {
+              "name": "Reenviar Verificación de Email",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\" : \"iossg8@gmail.com\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "http://localhost:3005/api/v1/auth/resend-verification",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3005",
+                  "path": ["api", "v1", "auth", "resend-verification"]
+                }
+              }
+            },
+            {
+              "name": "Recuperación de contraseña",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\" : \"iossg8@gmail.com\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "http://localhost:3005/api/v1/auth/forgot-password",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3005",
+                  "path": ["api", "v1", "auth", "forgot-password"]
+                }
+              }
+            },
+            {
+              "name": "Cambio de contraseña",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"AQUI_EL_TOKEN_DEL_CORREO\",\n  \"newPassword\": \"Hola12345678\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "http://localhost:3005/api/v1/auth/reset-password",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3005",
+                  "path": ["api", "v1", "auth", "reset-password"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Usuarios y Perfiles",
+          "item": [
+            {
+              "name": "Ver Perfil (me)",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3005/api/v1/auth/profile",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3005",
+                  "path": ["api", "v1", "auth", "profile"]
+                }
+              }
+            },
+            {
+              "name": "Actualizar Perfil (me)",
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    { "key": "email", "value": "nuevo@mail.com", "type": "text" },
+                    { "key": "phone", "value": "53170347", "type": "text" }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:3005/api/v1/users/me",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3005",
+                  "path": ["api", "v1", "users", "me"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Administración (Requiere Admin Token)",
+          "item": [
+            {
+              "name": "Registrar Usuario Directo",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    { "key": "name", "value": "ios", "type": "text" },
+                    { "key": "email", "value": "iossg8@gmail.com", "type": "text" },
+                    { "key": "password", "value": "Mlgdi3301", "type": "text" },
+                    { "key": "phone", "value": "53170347", "type": "text" }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:3005/api/v1/auth/register",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3005",
+                  "path": ["api", "v1", "auth", "register"]
+                }
+              }
+            },
+            {
+              "name": "Listar Solicitudes Pendientes (Signup)",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3005/api/v1/auth/signup-requests",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3005",
+                  "path": ["api", "v1", "auth", "signup-requests"]
+                }
+              }
+            },
+            {
+              "name": "Aprobar Solicitud (Signup)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3005/api/v1/auth/signup-requests/{{signupRequestId}}/approve",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3005",
+                  "path": ["api", "v1", "auth", "signup-requests", "{{signupRequestId}}", "approve"]
+                }
+              }
+            },
+            {
+              "name": "Rechazar Solicitud (Signup)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3005/api/v1/auth/signup-requests/{{signupRequestId}}/reject",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3005",
+                  "path": ["api", "v1", "auth", "signup-requests", "{{signupRequestId}}", "reject"]
+                }
+              }
+            },
+            {
+              "name": "Listar Solicitudes Update (Users)",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3005/api/v1/users/update-requests?status=PENDING",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3005",
+                  "path": ["api", "v1", "users", "update-requests"],
+                  "query": [
+                    { "key": "status", "value": "PENDING" }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Aprobar Update Request",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3005/api/v1/users/update-requests/{{updateRequestId}}/approve",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3005",
+                  "path": ["api", "v1", "users", "update-requests", "{{updateRequestId}}", "approve"]
+                }
+              }
+            },
+            {
+              "name": "Rechazar Update Request",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3005/api/v1/users/update-requests/{{updateRequestId}}/reject",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3005",
+                  "path": ["api", "v1", "users", "update-requests", "{{updateRequestId}}", "reject"]
+                }
+              }
+            },
+            {
+              "name": "Cambiar Role de Usuario",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"roleName\" : \"ADMIN_ROLE\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "http://localhost:3005/api/v1/users/{{userId}}/role",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3005",
+                  "path": ["api", "v1", "users", "{{userId}}", "role"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gestor Bancario (Puerto 3006)",
+      "item": [
+        {
+          "name": "Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3006/health",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3006",
+              "path": ["health"]
+            }
+          }
+        },
+        {
+          "name": "Cuentas",
+          "item": [
+            {
+              "name": "Crear Cuenta (Admin)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    { "key": "userId", "value": "{{userId}}", "type": "text" },
+                    { "key": "tipoCuenta", "value": "AHORRO", "type": "text" },
+                    { "key": "saldo", "value": "1500", "type": "text" },
+                    { "key": "moneda", "value": "GTQ", "type": "text" }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/account/create",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "account", "create"]
+                }
+              }
+            },
+            {
+              "name": "Listar Todas las Cuentas",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/account/get?page=1&limit=10",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "account", "get"],
+                  "query": [
+                    { "key": "page", "value": "1" },
+                    { "key": "limit", "value": "10" }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Listar Mis Cuentas Propias",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/account/get?misCuentas=true",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "account", "get"],
+                  "query": [
+                    { "key": "misCuentas", "value": "true" }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Transacciones",
+          "item": [
+            {
+              "name": "Crear Transacción",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    { "key": "tipoTransaccion", "value": "TRANSFERENCIA", "type": "text" },
+                    { "key": "monto", "value": "1200", "type": "text" },
+                    { "key": "moneda", "value": "GTQ", "type": "text" },
+                    { "key": "descripcion", "value": "Pago de prueba", "type": "text" },
+                    { "key": "cuentaOrigen", "value": "{{cuentaOrigenId}}", "type": "text" },
+                    { "key": "cuentaDestino", "value": "{{cuentaDestinoId}}", "type": "text" }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/transactions/create",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "transactions", "create"]
+                }
+              }
+            },
+            {
+              "name": "Listar Transacciones",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/transactions/get?page=1&limit=10",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "transactions", "get"],
+                  "query": [
+                    { "key": "page", "value": "1" },
+                    { "key": "limit", "value": "10" }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Buscar Transacción por ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/transactions/get/{{transactionId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "transactions", "get", "{{transactionId}}"]
+                }
+              }
+            },
+            {
+              "name": "Actualizar Estado/Descripción Transacción (Admin)",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    { "key": "estado", "value": "CANCELADA", "type": "text" },
+                    { "key": "descripcion", "value": "Se cancelo por error", "type": "text" }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/transactions/update/{{transactionId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "transactions", "update", "{{transactionId}}"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Favoritos",
+          "item": [
+            {
+              "name": "Agregar Favorito",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"cuenta\": \"1234567890\",\n    \"tipo\": \"AHORRO\",\n    \"alias\": \"Mi amigo Juan\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/favorites",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "favorites"]
+                }
+              }
+            },
+            {
+              "name": "Listar Favoritos",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/favorites",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "favorites"]
+                }
+              }
+            },
+            {
+              "name": "Eliminar Favorito",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/favorites/{{favoriteId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "favorites", "{{favoriteId}}"]
+                }
+              }
+            },
+            {
+              "name": "Preparar Transferencia a Favorito",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"monto\": 500,\n    \"moneda\": \"GTQ\",\n    \"descripcion\": \"Pago de cena\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/favorites/{{favoriteId}}/transfer",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "favorites", "{{favoriteId}}", "transfer"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Servicios y Productos",
+          "item": [
+            {
+              "name": "Crear Servicio o Producto (Admin)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Corte de cabello premium\",\n    \"description\": \"Servicio exclusivo para clientes\",\n    \"category\": \"Belleza\",\n    \"type\": \"SERVICE\",\n    \"price\": 150,\n    \"active\": true,\n    \"imageUrl\": \"https://example.com/servicio.jpg\",\n    \"terms\": \"Sujeto a disponibilidad\",\n    \"validFrom\": \"2026-05-01T00:00:00.000Z\",\n    \"validTo\": \"2026-12-31T23:59:59.000Z\",\n    \"discount\": {\n        \"type\": \"PERCENT\",\n        \"value\": 10,\n        \"startAt\": \"2026-05-01T00:00:00.000Z\",\n        \"endAt\": \"2026-05-31T23:59:59.000Z\",\n        \"minAmount\": 100,\n        \"maxUses\": 50,\n        \"terms\": \"Valido en sucursales participantes\"\n    }\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/services",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "services"]
+                }
+              }
+            },
+            {
+              "name": "Listar Servicios/Productos",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/services?type=SERVICE&active=true&category=Belleza&q=corte",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "services"],
+                  "query": [
+                    { "key": "type", "value": "SERVICE" },
+                    { "key": "active", "value": "true" },
+                    { "key": "category", "value": "Belleza" },
+                    { "key": "q", "value": "corte" }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Obtener Servicio/Producto por ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/services/{{serviceId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "services", "{{serviceId}}"]
+                }
+              }
+            },
+            {
+              "name": "Actualizar Servicio/Producto (Admin)",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"price\": 175,\n    \"active\": true,\n    \"discount\": {\n        \"type\": \"AMOUNT\",\n        \"value\": 20\n    }\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/services/{{serviceId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "services", "{{serviceId}}"]
+                }
+              }
+            },
+            {
+              "name": "Eliminar Servicio/Producto (Admin)",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/services/{{serviceId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "services", "{{serviceId}}"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Promociones",
+          "item": [
+            {
+              "name": "Crear Promocion Global (Admin)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Semana del cliente\",\n    \"description\": \"Beneficios exclusivos para clientes\",\n    \"terms\": \"Aplican restricciones\",\n    \"active\": true,\n    \"validFrom\": \"2026-06-01T00:00:00.000Z\",\n    \"validTo\": \"2026-06-30T23:59:59.000Z\",\n    \"imageUrl\": \"https://example.com/promo.jpg\",\n    \"conditions\": {\n        \"segment\": \"VIP\"\n    }\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/promotions",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "promotions"]
+                }
+              }
+            },
+            {
+              "name": "Listar Promociones",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/promotions?active=true&q=cliente",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "promotions"],
+                  "query": [
+                    { "key": "active", "value": "true" },
+                    { "key": "q", "value": "cliente" }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Obtener Promocion por ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{userToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/promotions/{{promotionId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "promotions", "{{promotionId}}"]
+                }
+              }
+            },
+            {
+              "name": "Actualizar Promocion (Admin)",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"active\": false,\n    \"terms\": \"Promocion finalizada\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/promotions/{{promotionId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "promotions", "{{promotionId}}"]
+                }
+              }
+            },
+            {
+              "name": "Eliminar Promocion (Admin)",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}", "type": "text" }
+                ],
+                "url": {
+                  "raw": "http://localhost:3006/gestionBancaria/api/v1/promotions/{{promotionId}}",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3006",
+                  "path": ["gestionBancaria", "api", "v1", "promotions", "{{promotionId}}"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
